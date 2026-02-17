@@ -1,0 +1,8 @@
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html, body, #__next { height: 100%; }
+body { @apply bg-gradient-to-b from-purple-50 via-white to-blue-50 text-slate-900 antialiased; }
+.glass { backdrop-filter: blur(8px); background: rgba(255,255,255,0.6); }
