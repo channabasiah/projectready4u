@@ -5,11 +5,7 @@ import { projects } from '../../../../lib/schema'
 
 export async function GET(req: Request, { params }: { params: { id: string } }) {
   try {
-    const projectId = parseInt(params.id, 10)
-    
-    if (isNaN(projectId) || !isFinite(projectId)) {
-      return NextResponse.json({ error: 'Invalid project ID' }, { status: 400 })
-    }
+    const projectId = params.id
     
     const result = await db
       .select()
@@ -33,11 +29,7 @@ export async function GET(req: Request, { params }: { params: { id: string } }) 
 
 export async function PUT(req: Request, { params }: { params: { id: string } }) {
   try {
-    const projectId = parseInt(params.id, 10)
-    
-    if (isNaN(projectId) || !isFinite(projectId)) {
-      return NextResponse.json({ error: 'Invalid project ID' }, { status: 400 })
-    }
+    const projectId = params.id
     
     const body = await req.json()
 
@@ -73,11 +65,7 @@ export async function PUT(req: Request, { params }: { params: { id: string } }) 
 
 export async function DELETE(req: Request, { params }: { params: { id: string } }) {
   try {
-    const projectId = parseInt(params.id, 10)
-    
-    if (isNaN(projectId) || !isFinite(projectId)) {
-      return NextResponse.json({ error: 'Invalid project ID' }, { status: 400 })
-    }
+    const projectId = params.id
 
     const deleted = await db
       .delete(projects)

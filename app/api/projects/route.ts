@@ -20,9 +20,9 @@ export async function POST(req: Request) {
     const body = await req.json()
     
     const created = await db.insert(projects).values({
+      id: `project-${Date.now()}`,
       project_name: body.name || body.project_name,
       description: body.description,
-      synopsis: body.description, // Use description as synopsis
       category: body.category,
       tech_stack: body.tech_stack,
       what_included: body.what_included,
@@ -30,7 +30,7 @@ export async function POST(req: Request) {
       discount_price: body.discount && body.price ? (body.price * (1 - body.discount / 100)) : body.price,
       github_repo_url: body.github_link || body.github_repo_url,
       demo_video_url: body.demo_link || body.demo_video_url,
-      created_at: new Date().toISOString(),
+      createdAt: new Date().toISOString(),
     }).returning()
 
     return NextResponse.json({ project: created[0] })

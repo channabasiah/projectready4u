@@ -16,26 +16,26 @@ export async function POST(req: Request, { params }: { params: { id: string } })
         admin_notes: body.admin_notes || '',
         approved_date: new Date().toISOString(),
       })
-      .where(eq(access_requests.id, parseInt(params.id)))
+      .where(eq(access_requests.id, params.id))
       .returning()
 
     // Fetch the request with related data
     if (updated && updated[0]) {
       const approvedRequest = updated[0]
       
-      // Fetch related project if project_id exists
+      // Fetch related project if projectId exists
       let project
-      if (approvedRequest.project_id) {
+      if (approvedRequest.projectId) {
         const projectData = await db
           .select()
           .from(projects)
-          .where(eq(projects.id, approvedRequest.project_id))
+          .where(eq(projects.id, approvedRequest.projectId))
           .limit(1)
         project = projectData[0]
       }
 
       // Send approval email
-      await sendApprovalEmail(approvedRequest, project)
+      await sendApprovalEmail(approvedRequest.user_email, project?.project_name || 'Project')
 
       return NextResponse.json({ approved: approvedRequest })
     }

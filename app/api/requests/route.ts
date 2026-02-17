@@ -21,11 +21,12 @@ export async function POST(req: Request) {
     }
     
     const result = await db.insert(access_requests).values({
+      id: `request-${Date.now()}`,
       user_name: userName,
       user_email: userEmail,
       user_college: userCollege,
       user_phone: userPhone,
-      project_id: projectId || null,
+      projectId: projectId?.toString() || '',
       status: 'pending',
       request_date: new Date().toISOString(),
     }).returning()
@@ -38,10 +39,10 @@ export async function POST(req: Request) {
           const project = await db.select().from(projects).where(eq(projects.id, projectId)).limit(1)
           if (project && project[0]) {
             // Send emails without awaiting
-            sendAdminNotification(result[0], project[0]).catch(err => 
+            sendAdminNotification(project[0].project_name, process.env.ADMIN_EMAIL || 'admin@example.com').catch(err => 
               console.error('Error sending admin notification:', err)
             )
-            sendRequestConfirmationEmail(result[0], project[0]).catch(err =>
+            sendRequestConfirmationEmail(result[0].user_email, project[0].project_name).catch(err =>
               console.error('Error sending confirmation email:', err)
             )
           }
