@@ -51,3 +51,22 @@ export async function sendApprovalEmail(userEmail: string, projectTitle: string)
   `
   return sendEmail(userEmail, `Access Granted - ${projectTitle}`, html)
 }
+
+export async function sendPasswordResetEmail(userEmail: string, resetLink: string) {
+  const html = `
+    <h2>Password Reset Request</h2>
+    <p>We received a request to reset your password. Click the link below to proceed:</p>
+    <p><a href="${resetLink}" style="background-color: #0066cc; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; display: inline-block;">Reset Password</a></p>
+    <p>This link expires in 1 hour.</p>
+    <p>If you didn't request this, please ignore this email.</p>
+  `
+  return sendEmail(userEmail, 'Password Reset Request', html)
+}
+
+export async function sendPasswordChangedEmail(userEmail: string) {
+  const html = `
+    <h2>Password Changed Successfully</h2>
+    <p>Your password has been successfully changed. If you didn't make this change, please contact support immediately.</p>
+  `
+  return sendEmail(userEmail, 'Password Changed Notification', html)
+}
