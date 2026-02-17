@@ -3,9 +3,9 @@ import { NextResponse } from 'next/server'
 import { db } from '../../../../lib/db-client'
 import { projects } from '../../../../lib/schema'
 
-export async function GET(req: Request, { params }: { params: { id: string } }) {
+export async function GET(req: Request, { params }: { params: Promise<{ id: string }> }) {
   try {
-    const projectId = params.id
+    const { id: projectId } = await params
     
     const result = await db
       .select()
@@ -27,9 +27,9 @@ export async function GET(req: Request, { params }: { params: { id: string } }) 
   }
 }
 
-export async function PUT(req: Request, { params }: { params: { id: string } }) {
+export async function PUT(req: Request, { params }: { params: Promise<{ id: string }> }) {
   try {
-    const projectId = params.id
+    const { id: projectId } = await params
     
     const body = await req.json()
 
@@ -63,9 +63,9 @@ export async function PUT(req: Request, { params }: { params: { id: string } }) 
   }
 }
 
-export async function DELETE(req: Request, { params }: { params: { id: string } }) {
+export async function DELETE(req: Request, { params }: { params: Promise<{ id: string }> }) {
   try {
-    const projectId = params.id
+    const { id: projectId } = await params
 
     const deleted = await db
       .delete(projects)

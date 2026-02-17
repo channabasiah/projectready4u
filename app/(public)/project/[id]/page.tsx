@@ -6,8 +6,13 @@ async function fetchProject(id: string) {
   return res.json()
 }
 
-export default async function ProjectPage({ params }: { params: { id: string } }) {
-  const { project } = await fetchProject(params.id)
+export default async function ProjectPage({ 
+  params 
+}: {
+  params: Promise<{ id: string }>
+}) {
+  const { id } = await params
+  const { project } = await fetchProject(id)
   if (!project) return <div className="p-6 text-center text-white">Project not found</div>
   return <ProjectDetailsContent project={project} />
 }

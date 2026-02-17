@@ -4,8 +4,9 @@ import { db } from '../../../../../lib/db-client'
 import { sendApprovalEmail } from '../../../../../lib/email'
 import { access_requests, projects } from '../../../../../lib/schema'
 
-export async function POST(req: Request, { params }: { params: { id: string } }) {
+export async function POST(req: Request, { params }: { params: Promise<{ id: string }> }) {
   try {
+    const { id } = await params
     const body = await req.json().catch(() => ({}))
     
     // Update request status to approved
@@ -16,7 +17,7 @@ export async function POST(req: Request, { params }: { params: { id: string } })
         admin_notes: body.admin_notes || '',
         approved_date: new Date().toISOString(),
       })
-      .where(eq(access_requests.id, params.id))
+      .where(eq(access_requests.id, id))
       .returning()
 
     // Fetch the request with related data
