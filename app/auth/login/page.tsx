@@ -3,10 +3,12 @@ import { ArrowLeft } from 'lucide-react'
 import { signIn } from 'next-auth/react'
 import Link from 'next/link'
 import { useRouter, useSearchParams } from 'next/navigation'
-import React, { useState } from 'react'
+import React, { useState, Suspense } from 'react'
 import { Toaster, toast } from 'sonner'
 
-export default function LoginPage() {
+export const dynamic = 'force-dynamic'
+
+function LoginContent() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [loading, setLoading] = useState(false)
@@ -36,14 +38,7 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen dark:bg-gradient-to-br dark:from-slate-950 dark:via-purple-900 dark:to-slate-950 from-white via-purple-50 to-blue-50 flex flex-col p-4 md:p-6">
-      <button
-        onClick={() => router.back()}
-        className="mb-6 inline-flex items-center gap-2 px-4 py-2 rounded-lg dark:bg-slate-800/50 dark:hover:bg-slate-700/50 bg-slate-100 hover:bg-slate-200 dark:text-slate-300 text-slate-700 font-medium transition-colors w-fit"
-      >
-        <ArrowLeft className="w-4 h-4" />
-        Back
-      </button>
+    <>
       <Toaster richColors />
       <div className="flex-1 flex items-center justify-center">
         <div className="w-full max-w-md">
@@ -99,6 +94,24 @@ export default function LoginPage() {
           </div>
         </div>
       </div>
+    </>
+  )
+}
+
+export default function LoginPage() {
+  const [mounted, setMounted] = React.useState(false)
+  React.useEffect(() => setMounted(true), [])
+  
+  return (
+    <div className="min-h-screen dark:bg-gradient-to-br dark:from-slate-950 dark:via-purple-900 dark:to-slate-950 from-white via-purple-50 to-blue-50 flex flex-col p-4 md:p-6">
+      <button
+        onClick={() => window.history.back()}
+        className="mb-6 inline-flex items-center gap-2 px-4 py-2 rounded-lg dark:bg-slate-800/50 dark:hover:bg-slate-700/50 bg-slate-100 hover:bg-slate-200 dark:text-slate-300 text-slate-700 font-medium transition-colors w-fit"
+      >
+        <ArrowLeft className="w-4 h-4" />
+        Back
+      </button>
+      {mounted && <LoginContent />}
     </div>
   )
 }
