@@ -1,0 +1,13 @@
+{
+  "framework": "nextjs",
+  "buildCommand": "next build",
+  "outputDirectory": ".next",
+  "public": true,
+  "env": [
+    "NEXT_PUBLIC_BASE_URL",
+    "SUPABASE_URL",
+    "SUPABASE_ANON_KEY",
+    "NEXTAUTH_SECRET",
+    "NEXTAUTH_URL"
+  ]
+}
