@@ -13,7 +13,8 @@ const PORT = process.env.PORT || 5000;
 const allowedOrigins = [
   'https://projectready4u-44.vercel.app',
   'https://projectready4u.vercel.app',
-  'https://projectready4u-44.vercel.app',
+  'https://projectready4u-wd6l.vercel.app',
+  'https://projectready4u-wd6l-preview.vercel.app',
   'https://your-backend-url.onrender.com',
 ];
 
@@ -50,6 +51,11 @@ app.get('/', (req, res) => {
   res.send({ message: 'ProjectReady4U backend is running.' });
 });
 
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
-});
+// Export app for serverless platform (Vercel) and support local run with node server/server.js
+module.exports = app;
+
+if (require.main === module) {
+  app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
+  });
+}
