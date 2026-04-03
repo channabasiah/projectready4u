@@ -24,6 +24,8 @@ export default function StudentForm({ apiUrl, onSuccess }) {
   const [error, setError] = useState('');
   const [showSuccessModal, setShowSuccessModal] = useState(false);
 
+  const baseApiUrl = apiUrl ? apiUrl.replace(/\/+$/, '') : '';
+
   const onSubmit = async (data) => {
     setError('');
     setLoading(true);
@@ -31,7 +33,7 @@ export default function StudentForm({ apiUrl, onSuccess }) {
       data.whatsapp = phoneValue;
     }
     try {
-      await axios.post(`${apiUrl}/api/leads`, data);
+      await axios.post(`${baseApiUrl}/api/leads`, data);
       setSuccess(true);
       setSuccessMessage('Thank you! Your details are received. We will contact you soon.');
       setSubmitted(true);

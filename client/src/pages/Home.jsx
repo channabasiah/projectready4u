@@ -6,7 +6,8 @@ import StudentForm from '../components/StudentForm';
 import ContactSection from '../components/ContactSection';
 import Footer from '../components/Footer';
 
-const API_URL = import.meta.env.VITE_API_URL;
+const rawApiUrl = import.meta.env.VITE_API_URL;
+const API_URL = rawApiUrl ? rawApiUrl.replace(/\/+$/, '') : '';
 
 const defaultContent = {
   hero_title: 'Join ProjectReady4U - Your Career Starts Here',
