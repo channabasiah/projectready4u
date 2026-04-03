@@ -3,11 +3,11 @@
   "buildCommand": "next build",
   "outputDirectory": ".next",
   "public": true,
-  "env": [
-    "NEXT_PUBLIC_BASE_URL",
-    "SUPABASE_URL",
-    "SUPABASE_ANON_KEY",
-    "NEXTAUTH_SECRET",
-    "NEXTAUTH_URL"
-  ]
+  "env": {
+    "NEXT_PUBLIC_BASE_URL": "@next_public_base_url",
+    "SUPABASE_URL": "@supabase_url",
+    "SUPABASE_ANON_KEY": "@supabase_anon_key",
+    "NEXTAUTH_SECRET": "@nextauth_secret",
+    "NEXTAUTH_URL": "@nextauth_url"
+  }
 }
