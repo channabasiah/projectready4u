@@ -51,7 +51,7 @@ export default function Home() {
 
   return (
     <div className="bg-black text-yellow-100 min-h-screen">
-      <Navbar />
+      <Navbar onRegisterClick={() => setShowRegisterModal(true)} />
       <div className="max-w-6xl mx-auto px-4 py-6">
         {loading && <div className="py-8 text-center text-yellow-300">Loading content...</div>}
         {error && <div className="py-2 px-4 bg-yellow-900 text-yellow-100 rounded-lg mb-4">{error}</div>}
