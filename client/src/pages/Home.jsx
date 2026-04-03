@@ -9,6 +9,13 @@ import Footer from '../components/Footer';
 const rawApiUrl = import.meta.env.VITE_API_URL;
 const API_URL = rawApiUrl ? rawApiUrl.replace(/\/+$/, '') : '';
 
+function buildApiPath(path) {
+  if (API_URL) {
+    return `${API_URL}${path}`;
+  }
+  return path; // same origin API path if not configured
+}
+
 const defaultContent = {
   hero_title: 'Join ProjectReady4U - Your Career Starts Here',
   hero_subtitle: 'Submit your details and our team will connect with you soon.',
@@ -29,7 +36,7 @@ export default function Home() {
     const fetchContent = async () => {
       setLoading(true);
       try {
-        const response = await axios.get(`${API_URL}/api/content`);
+        const response = await axios.get(buildApiPath('/api/content'));
         setContent(response.data.content || defaultContent);
       } catch (err) {
         console.error('Failed to fetch content:', err);
